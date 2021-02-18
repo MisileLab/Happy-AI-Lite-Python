@@ -4,3 +4,4 @@ psutil
 bs4
 beautifulsoup4
 typing
+youtube_dl

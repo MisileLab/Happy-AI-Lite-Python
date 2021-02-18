@@ -15,7 +15,7 @@ jobs:
       - python/save-cache
       - run:
           command: python Happy AI.py
-          name: Test
+          name: TEST
 
 workflows:
   main:
