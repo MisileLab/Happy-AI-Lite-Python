@@ -1,15 +1,9 @@
 version: 2.1
 
 jobs:
-  build-and-test:
+  build:
     docker:
       - image: circleci/python:3.9.1
     steps:
-      - run: git clone https://github.com/MisileLab/Happy-AI-Lite-Python
       - run: pip install -r requirements.txt
       - run: python Happy AI.py
-
-workflows:
-  main:
-    jobs:
-      - build-and-test
