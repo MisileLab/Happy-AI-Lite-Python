@@ -1,9 +1,17 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.2.0
+  
 jobs:
   build:
-    docker:
-      - image: circleci/python:3.9.1
+    working_directory: ~/project/Happy AI Lite
+    executor:
+      name: win/default
+      size: "medium"
     steps:
+      - run: cd /project/Happy AI Lite
       - run: pip install -r requirements.txt
       - run: python Happy AI.py
+    
+workflow:
