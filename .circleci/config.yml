@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/python:3.9.1
     steps:
-      - run: echo sans
+      - run: git clone https://github.com/MisileLab/Happy-AI-Lite-Python/blob/master/requirements.txt
       - run: pip install -r requirements.txt
       - run: python Happy AI.py
 
