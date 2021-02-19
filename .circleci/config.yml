@@ -5,9 +5,8 @@ orbs:
   
 jobs:
   build:
-    executor:
-      name: win/default
-      size: "medium"
+    machine:
+      image: ubuntu-1604-cuda-10.1:201909-23
     steps:
       - run: pip install -r requirements.txt
       - run: python Happy AI.py
