@@ -8,7 +8,7 @@ jobs:
     working_directory: ~/project/Happy AI Lite
     executor:
       name: win/default
-      size: "xlarge"
+      size: "large"
     steps:
       - run: cd /project/Happy AI Lite
       - run: pip install -r requirements.txt
