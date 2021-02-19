@@ -23,7 +23,13 @@ try:
     f.close()
 except:
     print('Github LOL and I will give Test Token')
-    TOKEN = 'ODEyMzEwNDgyMjA2NTg4OTc5.YC-5Fg.s-86X5cIxAulW3dZAPLZQsSuaDw'
+    f = open('token1.txt', 'r')
+    TOKEN1 = f.read()
+    f.close()
+    f = open('token2.txt', 'r')
+    TOKEN2 = f.read()
+    f.close()
+    TOKEN = str(TOKEN1) + str(TOKEN2)
 try:
     f = open('pymongotoken.txt', 'r')
     pymongotoken = f.read()
