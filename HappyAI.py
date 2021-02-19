@@ -22,6 +22,7 @@ try:
     TOKEN = f.read()
     f.close()
 except:
+    # Test TOKEN is just a discord build test. You need to change token and don't push
     print('Github LOL and I will give Test Token')
     f = open('token1.txt', 'r')
     TOKEN1 = f.read()
