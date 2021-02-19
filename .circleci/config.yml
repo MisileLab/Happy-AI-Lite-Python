@@ -5,12 +5,10 @@ orbs:
   
 jobs:
   build:
-    working_directory: ~/project/Happy AI Lite
     executor:
       name: win/default
       size: "medium"
     steps:
-      - run: cd "/project/Happy AI Lite"
       - run: pip install -r requirements.txt
       - run: python Happy AI.py
     
