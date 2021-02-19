@@ -17,12 +17,19 @@ import youtube_dl
 intents = discord.Intents.default()
 intents.members = True
 Client = commands.Bot(command_prefix='$', intents=intents, help_command=None)
-f = open('token.txt', 'r')
-TOKEN = f.read()
-f.close()
-f = open('pymongotoken.txt', 'r')
-pymongotoken = f.read()
-f.close()
+try:
+    f = open('token.txt', 'r')
+    TOKEN = f.read()
+    f.close()
+except:
+    print('Github LOL and I will give Test Token')
+    TOKEN = 'ODEyMzEwNDgyMjA2NTg4OTc5.YC-5Fg.s-86X5cIxAulW3dZAPLZQsSuaDw'
+try:
+    f = open('pymongotoken.txt', 'r')
+    pymongotoken = f.read()
+    f.close()
+except:
+    print('Github LOL')
 
 status = discord.Game('$도움말 또는 $help로 도움말을 보세요.')
 
