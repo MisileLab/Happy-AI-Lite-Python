@@ -7,6 +7,9 @@ jobs:
     machine:
       image: ubuntu-2004:202010-01 # recommended linux image
     steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
       - python/install-packages:
           pip-dependency-file: requirements.txt
           pkg-manager: pip
