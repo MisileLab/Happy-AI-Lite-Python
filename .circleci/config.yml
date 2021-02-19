@@ -1,14 +1,10 @@
 version: 2.1
-
-orbs:
-  win: circleci/windows@2.2.0
   
 jobs:
   build:
     machine:
-      image: ubuntu-1604-cuda-10.1:201909-23
+      image: ubuntu-2004:202010-01 # recommended linux image
     steps:
-      - run: pip install -r requirements.txt
+      - run: pip install --upgrade pip
+      - run: pip install -r /bin/bash/requirements.txt
       - run: python Happy AI.py
-    
-workflow:
