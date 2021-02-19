@@ -1,10 +1,15 @@
 version: 2.1
   
+orbs:
+  python: circleci/python@1.3.2
 jobs:
   build:
     machine:
       image: ubuntu-2004:202010-01 # recommended linux image
     steps:
+      - python/install-packages:
+          pip-dependency-file: requirements.txt
+          pkg-manager: pip
       - run: pip install --upgrade pip
       - run: pip install -r /bin/bash/requirements.txt
       - run: python Happy AI.py
