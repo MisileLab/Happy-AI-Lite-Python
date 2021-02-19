@@ -1,4 +1,4 @@
-
+#!/usr/bin/python
 import pymongo
 import discord
 from discord.ext.commands import has_permissions, MissingPermissions
