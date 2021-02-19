@@ -1,4 +1,4 @@
-
+import sys
 import pymongo
 import discord
 from discord.ext.commands import has_permissions, MissingPermissions
@@ -22,15 +22,7 @@ try:
     TOKEN = f.read()
     f.close()
 except:
-    # Test TOKEN is just a discord build test. You need to change token and don't push
-    print('Github LOL and I will give Test Token')
-    f = open('token1.txt', 'r')
-    TOKEN1 = f.read()
-    f.close()
-    f = open('token2.txt', 'r')
-    TOKEN2 = f.read()
-    f.close()
-    TOKEN = str(TOKEN1) + str(TOKEN2)
+    sys.exit('Github Bye')
 try:
     f = open('pymongotoken.txt', 'r')
     pymongotoken = f.read()
