@@ -413,149 +413,108 @@ async def 정지(ctx):
     voice = discord.utils.get(Client.voice_clients, guild=ctx.guild)
     voice.stop()
 
-@Client.command(name='kick')
+
 @has_permissions(kick_members=True)
-async def _kick(ctx, arg1:discord.Member, arg2:typing.Optional):
-    arg2 = arg2 or None
-    arg1.kick(reason=arg2)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 킥되었습니다. 이유: {arg2}")
+async def kick(ctx, arg1:discord.Member, arg2:typing.Optional):
+    try:
+        arg2 = arg2 or None
+        arg1.kick(reason=arg2)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 킥되었습니다. 이유: {arg2}")
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 킥할 권한이 없습니다.')
 
-@_kick.error
-async def kick_error(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='킥')
 @has_permissions(kick_members=True)
-async def _킥(ctx, arg1:discord.Member, arg2:typing.Optional):
-    arg2 = arg2 or None
-    arg1.kick(reason=arg2)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 킥되었습니다. 이유: {arg2}")
+async def 킥(ctx, arg1:discord.Member, arg2:typing.Optional):
+    try:
+        arg2 = arg2 or None
+        arg1.kick(reason=arg2)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 킥되었습니다. 이유: {arg2}")
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 킥할 권한이 없습니다.')
 
-@_킥.error
-async def 킥에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='ban')
 @has_permissions(ban_members=True)
-async def _ban(ctx, arg1:discord.Member):
-    arg1.ban()
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 밴되었습니다.")
+async def ban(ctx, arg1:discord.Member):
+    try:
+        arg1.ban()
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 밴되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 밴할 권한이 없습니다.")
 
-@_ban.error
-async def ban에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='밴')
 @has_permissions(ban_members=True)
-async def _밴(ctx, arg1:discord.Member):
-    arg1.ban()
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 밴되었습니다.")
+async def 밴(ctx, arg1:discord.Member):
+    try:
+        arg1.ban()
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 밴되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 밴할 권한이 없습니다.")
 
-@_밴.error
-async def 밴에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='격리')
 @has_permissions(ban_members=True, kick_members=True, manage_roles=True)
-async def _격리(ctx, arg1:discord.Member):
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749473772817481729)
-    role2 = guild.get_role(749446502509707356)
-    role3 = guild.get_role(749339636270104626)
-    role4 = guild.get_role(802733890221375498)
-    await arg1.remove_roles(role1)
-    await arg1.remove_roles(role2)
-    await arg1.remove_roles(role3)
-    await arg1.add_roles(role4)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 격리되었습니다.")
+async def 격리(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749473772817481729)
+        role2 = guild.get_role(749446502509707356)
+        role3 = guild.get_role(749339636270104626)
+        role4 = guild.get_role(802733890221375498)
+        await arg1.remove_roles(role1)
+        await arg1.remove_roles(role2)
+        await arg1.remove_roles(role3)
+        await arg1.add_roles(role4)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 격리되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@_격리.error
-async def 격리에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='격리해제')
 @has_permissions(ban_members=True, kick_members=True, manage_roles=True)
-async def _격리해제(ctx, arg1:discord.Member):
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749339636270104626)
-    role2 = guild.get_role(802733890221375498)
-    await arg1.add_roles(role1)
-    await arg1.remove_roles(role2)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 격리해제 되었습니다.")
+async def 격리해제(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749339636270104626)
+        role2 = guild.get_role(802733890221375498)
+        await arg1.add_roles(role1)
+        await arg1.remove_roles(role2)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 격리해제 되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@_격리해제.error
-async def 격리_에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='mute')
 @has_permissions(kick_members=True)
-async def _mute(ctx, arg1:discord.Member):
-    print('1')
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749444844178374798)
-    await arg1.add_roles(role1)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 뮤트되었습니다.")
+async def mute(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749444844178374798)
+        await arg1.add_roles(role1)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 뮤트되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@_mute.error
-async def mute에러(ctx, error):
-    print(error)
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='뮤트')
 @has_permissions(kick_members=True)
-async def _뮤트(ctx, arg1:discord.Member):
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749444844178374798)
-    await arg1.add_roles(role1)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 뮤트되었습니다.")
+async def 뮤트(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749444844178374798)
+        await arg1.add_roles(role1)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 뮤트되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@_뮤트.error
-async def 뮤트에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='unmute')
 @has_permissions(kick_members=True)
-async def _unmute(ctx, arg1:discord.Member):
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749444844178374798)
-    await arg1.remove_roles(role1)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 언뮤트되었습니다.")
+async def unmute(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749444844178374798)
+        await arg1.remove_roles(role1)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 언뮤트되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@_unmute.error
-async def unmute에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@Client.command(name='언뮤트')
 @has_permissions(kick_members=True)
-async def _언뮤트(ctx, arg1:discord.Member):
-    guild = Client.get_guild(635336036465246218)
-    role1 = guild.get_role(749444844178374798)
-    await arg1.remove_roles(role1)
-    await ctx.send(f"{arg1.display_name}님이 성공적으로 언뮤트되었습니다.")
-
-@_언뮤트.error
-async def 언뮤트에러(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def 언뮤트(ctx, arg1:discord.Member):
+    try:
+        guild = Client.get_guild(635336036465246218)
+        role1 = guild.get_role(749444844178374798)
+        await arg1.remove_roles(role1)
+        await ctx.send(f"{arg1.display_name}님이 성공적으로 언뮤트되었습니다.")
+    except MissingPermissions:
+        await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @Client.command
 async def warn(ctx, arg1:discord.Member):
@@ -590,500 +549,519 @@ async def 주의(ctx, arg1:discord.Member):
         await ctx.send(f'{arg1.display_name}님의 주의 개수는 {each_doc["warn"]}개입니다.')
 
 @has_permissions(kick_members=True)
-@Client.command(name='addwarn')
-async def _addwarn(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ii1 = int(each_doc['warn']) + int(arg2)
+async def addwarn(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ii1 = int(each_doc['warn']) + int(arg2)
+            memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
+            clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
+            await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 주었습니다. 현재 주의 개수 {ii1}')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
+
+@has_permissions(kick_members=True)
+async def 주의추가(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ii1 = int(each_doc['warn']) + int(arg2)
+            memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
+            clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
+            await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 주었습니다. 현재 주의 개수 {ii1}')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
+
+@has_permissions(kick_members=True)
+async def 주의설정(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        ii1 = int(arg2)
         memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
         clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 주었습니다. 현재 주의 개수 {ii1}')
-
-@_addwarn.error
-async def warnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}로 설정했습니다.')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
-@Client.command(name='주의추가')
-async def _주의추가(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ii1 = int(each_doc['warn']) + int(arg2)
+async def setwarn(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        ii1 = int(arg2)
         memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
         clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 주었습니다. 현재 주의 개수 {ii1}')
-
-@_주의추가.error
-async def addwarnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}로 설정했습니다.')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
-@Client.command(name='주의설정')
-async def _주의설정(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    ii1 = int(arg2)
-    memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
-    clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-    await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}로 설정했습니다.')
-
-@_주의설정.error
-async def setwarnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def deletewarn(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ii1 = int(each_doc['warn']) - int(arg2)
+            memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
+            clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
+            await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 삭제했습니다. 현재 주의 개수 {ii1}')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
-@Client.command(name='setwarn')
-async def _setwarn(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    ii1 = int(arg2)
-    memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
-    clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-    await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}로 설정했습니다.')
-
-@_setwarn.error
-async def _setwarnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@has_permissions(kick_members=True)
-@Client.command(name='deletewarn')
-async def _deletewarn(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ii1 = int(each_doc['warn']) - int(arg2)
-        memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
-        clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 삭제했습니다. 현재 주의 개수 {ii1}')
-
-@_deletewarn.error
-async def _deletewarnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
-
-@has_permissions(kick_members=True)
-@Client.command(name='주의삭제')
-async def _주의삭제(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='warn')
-    ar1 = arg1.name
-    ar2 = arg1.id
-    filter1 = {"_id":ar2}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ii1 = int(each_doc['warn']) - int(arg2)
-        memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
-        clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
-        await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 삭제했습니다. 현재 주의 개수 {ii1}')
-
-@_주의삭제.error
-async def deletewarnerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def 주의삭제(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='warn')
+        ar1 = arg1.name
+        ar2 = arg1.id
+        filter1 = {"_id":ar2}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":ar2, "name":ar1, "warn":0}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ii1 = int(each_doc['warn']) - int(arg2)
+            memberdictionary2 = {"_id":ar2, "name":ar1, "warn":ii1}
+            clientdictionary.replace_one(filter=filter1, replacement=memberdictionary2)
+            await ctx.send(f'{arg1.display_name}님에게 주의를 {arg2}만큼 삭제했습니다. 현재 주의 개수 {ii1}')
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='expadd')
-async def _expadd(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = each_doc['level']
-        exp1 = int(each_doc['exp']) + int(arg2)
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
+async def expadd(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = each_doc['level']
+            exp1 = int(each_doc['exp']) + int(arg2)
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
-
-@_expadd.error
-async def expadderror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
 
 @has_permissions(administrator=True)
-@Client.command(name='expset')
-async def _expset(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = each_doc['level']
-        exp1 = int(arg2)
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_expset.error
-async def expseterror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def expset(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = each_doc['level']
+            exp1 = int(arg2)
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='expdelete')
-async def _expdelete(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = each_doc['level']
-        exp1 = int(each_doc['exp']) + int(arg2)
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_expdelete.error
-async def expdeleteerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def expdelete(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = each_doc['level']
+            exp1 = int(each_doc['exp']) + int(arg2)
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='leveladd')
-async def _leveladd(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(each_doc['level']) + int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_leveladd.error
-async def leveladderror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def leveladd(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(each_doc['level']) + int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='레벨증가')
-async def _레벨증가(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(each_doc['level']) + int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_레벨증가.error
-async def 레벨adderror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def 레벨증가(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(each_doc['level']) + int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='levelset')
-async def _levelset(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_levelset.error
-async def levelseterror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def levelset(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='레벨설정')
-async def _레벨설정(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_레벨설정.error
-async def 레벨seterror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def 레벨설정(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='leveldelete')
-async def _leveldelete(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(each_doc['level']) - int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_leveldelete.error
-async def 레벨deleteerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def leveldelete(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(each_doc['level']) - int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='레벨감소')
-async def _레벨감소(ctx, arg1:discord.Member, arg2):
-    client1 = pymongo.MongoClient(pymongotoken)
-    clientdiscord = client1.get_database(name='discord')
-    clientdictionary = clientdiscord.get_collection(name='leveling')
-    author = arg1.id
-    author1 = arg1.name
-    filter1 = {"_id":author}
-    if clientdictionary.find_one(filter=filter1) is None:
-        memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
-        print(memberdictionary)
-        clientdictionary.save(memberdictionary)
-    cursor = clientdictionary.find(filter1)
-    for each_doc in cursor:
-        ctx.send('성공적으로 변경되었습니다.')
-        level1 = int(each_doc['level']) - int(arg2)
-        exp1 = int(each_doc['exp'])
-        if exp1 >= multiply(level1, 350):
-            level1 = int(level1) + 1
-            exp1 = 0
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-            ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
-        else:
-            filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
-            clientdictionary.replace_one(filter=filter1, replacement=filter2)
-
-
-@_레벨감소.error
-async def leveldeleteerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def 레벨감소(ctx, arg1:discord.Member, arg2):
+    try:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='leveling')
+        author = arg1.id
+        author1 = arg1.name
+        filter1 = {"_id":author}
+        if clientdictionary.find_one(filter=filter1) is None:
+            memberdictionary = {"_id":author, "name":author1, "exp":0, "level":1}
+            print(memberdictionary)
+            clientdictionary.save(memberdictionary)
+        cursor = clientdictionary.find(filter1)
+        for each_doc in cursor:
+            ctx.send('성공적으로 변경되었습니다.')
+            level1 = int(each_doc['level']) - int(arg2)
+            exp1 = int(each_doc['exp'])
+            if exp1 >= multiply(level1, 350):
+                level1 = int(level1) + 1
+                exp1 = 0
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                ctx.send(f'{ctx.author.name}님이 {level1}레벨으로 레벨업 하였습니다!')
+            else:
+                filter2 = {"_id":each_doc['_id'], "name":each_doc['name'], "exp":exp1, "level":level1}
+                clientdictionary.replace_one(filter=filter1, replacement=filter2)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='clear')
-async def _clean(ctx, arg1):
-    deleted = await ctx.message.channel.purge(limit=int(arg1))
-    deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
-    newdeletemessage = await ctx.fetch_message(deletemessage.id)
-
-
-@_clean.error
-async def cleanerror(ctx, error):
-    print(error)
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+async def clear(ctx, arg1):
+    try:
+        deleted = await ctx.message.channel.purge(limit=int(arg1))
+        deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
+        newdeletemessage = await ctx.fetch_message(deletemessage.id)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
-@Client.command(name='청소')
-async def _청소(ctx, arg1):
-    deleted = await ctx.message.channel.purge(limit=int(arg1))
-    deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
-    newdeletemessage = await ctx.fetch_message(deletemessage.id)
+async def 청소(ctx, arg1):
+    try:
+        deleted = await ctx.message.channel.purge(limit=int(arg1))
+        deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
+        newdeletemessage = await ctx.fetch_message(deletemessage.id)
+    except MissingPermissions:
+        await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
+@Client.command()
+async def random(ctx, arg1, arg2):
+    ctx.send('계산 중...')
+    try:
+        arg1 = int(arg1)
+        arg2 = int(arg2)
+        random.randint(arg1, arg2)
+        ctx.send('계산 완료')
+    except ValueError:
+        ctx.send('숫자를 넣어주세요!')
 
-@_clean.error
-async def cleanerror(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "미안하지만 {}님은 권한이 없습니다.".format(ctx.message.author)
-        await ctx.send(text)
+@Client.command()
+async def 랜덤(ctx, arg1, arg2):
+    ctx.send('계산 중...')
+    try:
+        arg1 = int(arg1)
+        arg2 = int(arg2)
+        random.randint(arg1, arg2)
+        ctx.send('계산 완료')
+    except ValueError:
+        ctx.send('숫자를 넣어주세요!')
+
+@Client.command()
+@commands.Cooldown(1, 60, commands.BucketType.user)
+async def forge(ctx, arg1):
+    if arg1 is None:
+        await ctx.send('강화할 무기를 지정해주세요!')
+    else:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='forge')
+        author = ctx.author.id
+        author1 = ctx.author.name
+        filter1 = {"_id":author,"name":arg1}
+        search = clientdictionary.find_one(filter=filter1)
+        for searchi in search:
+            _id = searchi._id
+            name = searchi.name
+            forgetestresult = forgetest(_id, author1, name, arg1)
+            if forgetestresult == True:
+                await ctx.send('이것은 다른 사람이 만든 무기입니다!')
+            else:
+                level1 = searchi._level
+                percent1 = 1 * int(level1)
+                random1 = random.randint(0, 1000)
+                if random1 <= 90 - percent1:
+                    level1 = int(level1) + 1
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {level1}')
+                elif random1 > 90 - percent1 and level1 == 1:
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                else:
+                    level1 = level1 - 1
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+
+@Client.command()
+@commands.Cooldown(1, 60, commands.BucketType.user)
+async def 강화(ctx, arg1):
+    if arg1 is None:
+        await ctx.send('강화할 무기를 지정해주세요!')
+    else:
+        client1 = pymongo.MongoClient(pymongotoken)
+        clientdiscord = client1.get_database(name='discord')
+        clientdictionary = clientdiscord.get_collection(name='forge')
+        author = ctx.author.id
+        author1 = ctx.author.name
+        filter1 = {"_id":author,"name":arg1}
+        search = clientdictionary.find_one(filter=filter1)
+        for searchi in search:
+            _id = searchi._id
+            name = searchi.name
+            forgetestresult = forgetest(_id, author1, name, arg1)
+            if forgetestresult == True:
+                await ctx.send('이것은 다른 사람이 만든 무기입니다!')
+            else:
+                level1 = searchi._level
+                percent1 = 1 * int(level1)
+                random1 = random.randint(0, 1000)
+                if random1 <= 90 - percent1:
+                    level1 = int(level1) + 1
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {level1}')
+                elif random1 > 90 - percent1 and level1 == 1:
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                else:
+                    level1 = level1 - 1
+                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
 
 def todaycalculate():
     datetimetoday = datetime.datetime.today()
@@ -1101,5 +1079,11 @@ def multiply(x, y):
 
 def divide(x, y):
     return int(x) / int(y)
+
+def forgetest(author, author1, name, name1):
+    if author != author1 and author == name1:
+        return True
+    else:
+        return False
 
 Client.run(TOKEN)
