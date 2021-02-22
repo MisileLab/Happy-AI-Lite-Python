@@ -6,4 +6,3 @@ beautifulsoup4
 typing
 youtube_dl
 bandit
-time
