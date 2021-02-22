@@ -12,6 +12,7 @@ import random
 import typing
 import os
 import youtube_dl
+import time
 
 intents = discord.Intents.default()
 intents.members = True
@@ -77,8 +78,8 @@ async def 봇(ctx):
     embedbot.set_footer(text=todaycalculate())
     await ctx.send(embed=embedbot)
 
-@Client.command()
-async def time(ctx):
+@Client.command(name='time')
+async def _time(ctx):
     await ctx.send(todaycalculate())
 
 @Client.command()
@@ -415,6 +416,7 @@ async def 정지(ctx):
 
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def kick(ctx, arg1:discord.Member, arg2:typing.Optional):
     try:
         arg2 = arg2 or None
@@ -424,6 +426,7 @@ async def kick(ctx, arg1:discord.Member, arg2:typing.Optional):
         await ctx.send(f'{ctx.message.author}님은 킥할 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 킥(ctx, arg1:discord.Member, arg2:typing.Optional):
     try:
         arg2 = arg2 or None
@@ -433,6 +436,7 @@ async def 킥(ctx, arg1:discord.Member, arg2:typing.Optional):
         await ctx.send(f'{ctx.message.author}님은 킥할 권한이 없습니다.')
 
 @has_permissions(ban_members=True)
+@Client.command()
 async def ban(ctx, arg1:discord.Member):
     try:
         arg1.ban()
@@ -441,6 +445,7 @@ async def ban(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 밴할 권한이 없습니다.")
 
 @has_permissions(ban_members=True)
+@Client.command()
 async def 밴(ctx, arg1:discord.Member):
     try:
         arg1.ban()
@@ -449,6 +454,7 @@ async def 밴(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 밴할 권한이 없습니다.")
 
 @has_permissions(ban_members=True, kick_members=True, manage_roles=True)
+@Client.command()
 async def 격리(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -465,6 +471,7 @@ async def 격리(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @has_permissions(ban_members=True, kick_members=True, manage_roles=True)
+@Client.command()
 async def 격리해제(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -477,6 +484,7 @@ async def 격리해제(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def mute(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -487,6 +495,7 @@ async def mute(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 뮤트(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -497,6 +506,7 @@ async def 뮤트(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def unmute(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -507,6 +517,7 @@ async def unmute(ctx, arg1:discord.Member):
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 언뮤트(ctx, arg1:discord.Member):
     try:
         guild = Client.get_guild(635336036465246218)
@@ -516,7 +527,7 @@ async def 언뮤트(ctx, arg1:discord.Member):
     except MissingPermissions:
         await ctx.send(f"{ctx.message.author}님은 권한이 없습니다.")
 
-@Client.command
+@Client.command()
 async def warn(ctx, arg1:discord.Member):
     client1 = pymongo.MongoClient(pymongotoken)
     clientdiscord = client1.get_database(name='discord')
@@ -532,7 +543,7 @@ async def warn(ctx, arg1:discord.Member):
     for each_doc in cursor:
         await ctx.send(f'{arg1.display_name}님의 주의 개수는 {each_doc["warn"]}개입니다.')
 
-@Client.command
+@Client.command()
 async def 주의(ctx, arg1:discord.Member):
     client1 = pymongo.MongoClient(pymongotoken)
     clientdiscord = client1.get_database(name='discord')
@@ -549,6 +560,7 @@ async def 주의(ctx, arg1:discord.Member):
         await ctx.send(f'{arg1.display_name}님의 주의 개수는 {each_doc["warn"]}개입니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def addwarn(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -571,6 +583,7 @@ async def addwarn(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 주의추가(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -593,6 +606,7 @@ async def 주의추가(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 주의설정(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -613,6 +627,7 @@ async def 주의설정(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def setwarn(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -633,6 +648,7 @@ async def setwarn(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def deletewarn(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -655,6 +671,7 @@ async def deletewarn(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(kick_members=True)
+@Client.command()
 async def 주의삭제(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -677,6 +694,7 @@ async def 주의삭제(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def expadd(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -708,6 +726,7 @@ async def expadd(ctx, arg1:discord.Member, arg2):
 
 
 @has_permissions(administrator=True)
+@Client.command()
 async def expset(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -738,6 +757,7 @@ async def expset(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def expdelete(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -768,6 +788,7 @@ async def expdelete(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def leveladd(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -798,6 +819,7 @@ async def leveladd(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def 레벨증가(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -828,6 +850,7 @@ async def 레벨증가(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def levelset(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -858,6 +881,7 @@ async def levelset(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def 레벨설정(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -888,6 +912,7 @@ async def 레벨설정(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def leveldelete(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -918,6 +943,7 @@ async def leveldelete(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def 레벨감소(ctx, arg1:discord.Member, arg2):
     try:
         client1 = pymongo.MongoClient(pymongotoken)
@@ -948,51 +974,58 @@ async def 레벨감소(ctx, arg1:discord.Member, arg2):
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def clear(ctx, arg1):
     try:
-        deleted = await ctx.message.channel.purge(limit=int(arg1))
-        deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
+        deleted = await ctx.message.channel.purge(limit=int(arg1) + int(1))
+        deletemessage = await ctx.send(f'{len(deleted) - 1}개의 메시지를 지웠습니다.')
         newdeletemessage = await ctx.fetch_message(deletemessage.id)
+        time.sleep(5)
+        await newdeletemessage.delete()
     except MissingPermissions:
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
 @has_permissions(administrator=True)
+@Client.command()
 async def 청소(ctx, arg1):
     try:
-        deleted = await ctx.message.channel.purge(limit=int(arg1))
-        deletemessage = await ctx.send(f'{len(deleted)}개만큼 지웠습니다.')
+        deleted = await ctx.message.channel.purge(limit=int(arg1) + int(1))
+        deletemessage = await ctx.send(f'{len(deleted) - 1}개의 메시지를 지웠습니다.')
         newdeletemessage = await ctx.fetch_message(deletemessage.id)
+        time.sleep(5)
+        await newdeletemessage.delete()
     except MissingPermissions:
         await ctx.send(f'{ctx.message.author}님은 권한이 없습니다.')
 
-@Client.command()
-async def random(ctx, arg1, arg2):
-    ctx.send('계산 중...')
+@Client.command(name='random')
+async def _random(ctx, arg1, arg2):
     try:
         arg1 = int(arg1)
         arg2 = int(arg2)
-        random.randint(arg1, arg2)
-        ctx.send('계산 완료')
+        random1 = random.randint(arg1, arg2)
+        await ctx.send(f'계산 완료! 결과 : {random1}')
     except ValueError:
-        ctx.send('숫자를 넣어주세요!')
+        await ctx.send('숫자를 넣어주세요!')
 
 @Client.command()
 async def 랜덤(ctx, arg1, arg2):
-    ctx.send('계산 중...')
     try:
         arg1 = int(arg1)
         arg2 = int(arg2)
-        random.randint(arg1, arg2)
-        ctx.send('계산 완료')
+        random1 = random.randint(arg1, arg2)
+        await ctx.send(f'계산 완료! 결과 : {random1}')
     except ValueError:
-        ctx.send('숫자를 넣어주세요!')
+        await ctx.send('숫자를 넣어주세요!')
 
 @Client.command()
-@commands.Cooldown(1, 60, commands.BucketType.user)
+@commands.cooldown(1, 60, commands.BucketType.user)
 async def forge(ctx, arg1):
+    print(1)
     if arg1 is None:
         await ctx.send('강화할 무기를 지정해주세요!')
+        print(2)
     else:
+        print(3)
         client1 = pymongo.MongoClient(pymongotoken)
         clientdiscord = client1.get_database(name='discord')
         clientdictionary = clientdiscord.get_collection(name='forge')
@@ -1000,33 +1033,44 @@ async def forge(ctx, arg1):
         author1 = ctx.author.name
         filter1 = {"_id":author,"name":arg1}
         search = clientdictionary.find_one(filter=filter1)
-        for searchi in search:
-            _id = searchi._id
-            name = searchi.name
+        if forgetest2(author, arg1) != 3:
+            print(4)
+            print(forgetest2(author, arg1))
+            _id = findforgeid(arg1, author)
+            name = findforgename(arg1, author)
             forgetestresult = forgetest(_id, author1, name, arg1)
             if forgetestresult == True:
+                print(5)
                 await ctx.send('이것은 다른 사람이 만든 무기입니다!')
             else:
-                level1 = searchi._level
-                percent1 = 1 * int(level1)
-                random1 = random.randint(0, 1000)
-                if random1 <= 90 - percent1:
-                    level1 = int(level1) + 1
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                print(6)
+                level1 = findforgelevel(name, _id)
+                randomresult = forgecalculate(level1)
+                print(randomresult)
+                if level1 + 1 == randomresult:
+                    print(7)
+                    filter2 = {"_id":author, "name":arg1, "authorname":ctx.author.name, "level":randomresult}
                     clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {level1}')
-                elif random1 > 90 - percent1 and level1 == 1:
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
-                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {randomresult}')
+                    client1.close()
                 else:
-                    level1 = level1 - 1
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    print(8)
+                    filter2 = {"_id":author, "name":arg1, "authorname":ctx.author.name, "level":randomresult}
                     clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {randomresult} ')
+                    client1.close()
+        else:
+            print(9)
+            client1 = pymongo.MongoClient(pymongotoken)
+            clientdiscord = client1.get_database(name='discord')
+            clientdictionary = clientdiscord.get_collection(name='forge')
+            await ctx.send('무기를 만들었으니 나중에 다시 쳐주세요!')
+            filter2 = {"_id":ctx.author.id, "name":arg1, "authorname":ctx.author.name, "level":1}
+            clientdictionary.insert_one(filter2)
+            client1.close()
 
 @Client.command()
-@commands.Cooldown(1, 60, commands.BucketType.user)
+@commands.cooldown(1, 60, commands.BucketType.user)
 async def 강화(ctx, arg1):
     if arg1 is None:
         await ctx.send('강화할 무기를 지정해주세요!')
@@ -1038,30 +1082,34 @@ async def 강화(ctx, arg1):
         author1 = ctx.author.name
         filter1 = {"_id":author,"name":arg1}
         search = clientdictionary.find_one(filter=filter1)
-        for searchi in search:
-            _id = searchi._id
-            name = searchi.name
+        if forgetest2 != 3:
+            _id = findforgeid(arg1, author)
+            name = findforgename(arg1, author)
             forgetestresult = forgetest(_id, author1, name, arg1)
             if forgetestresult == True:
                 await ctx.send('이것은 다른 사람이 만든 무기입니다!')
             else:
-                level1 = searchi._level
-                percent1 = 1 * int(level1)
-                random1 = random.randint(0, 1000)
-                if random1 <= 90 - percent1:
-                    level1 = int(level1) + 1
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                level1 = findforgelevel(name, _id)
+                randomresult = forgecalculate(level1)
+                print(randomresult)
+                if randomresult > level1:
+                    filter2 = {"_id":author, "name":arg1, "level":randomresult}
                     clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {level1}')
-                elif random1 > 90 - percent1 and level1 == 1:
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
-                    clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화되었습니다! 현재 레벨 : {randomresult}')
+                    client1.close()
                 else:
-                    level1 = level1 - 1
-                    filter2 = {"_id":author, "name":arg1, "level":level1}
+                    filter2 = {"_id":author, "name":arg1, "level":randomresult}
                     clientdictionary.replace_one(filter=filter1, replacement=filter2)
-                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {level1} ')
+                    await ctx.send(f'{author1}님의 {arg1}이(가) 강화에 실패했습니다. 현재 레벨 : {randomresult} ')
+                    client1.close()
+        else:
+            client1 = pymongo.MongoClient(pymongotoken)
+            clientdiscord = client1.get_database(name='discord')
+            clientdictionary = clientdiscord.get_collection(name='forge')
+            ctx.send('무기를 만들었으니 나중에 다시 쳐주세요!')
+            filter2 = {"_id":ctx.author.id, "name":arg1, "level":1}
+            clientdictionary.insert_one(filter2)
+            client1.close()
 
 def todaycalculate():
     datetimetoday = datetime.datetime.today()
@@ -1085,5 +1133,81 @@ def forgetest(author, author1, name, name1):
         return True
     else:
         return False
+
+def forgetest2(id, arg1):
+    client1 = pymongo.MongoClient(pymongotoken)
+    clientdiscord = client1.get_database(name='discord')
+    clientdictionary = clientdiscord.get_collection(name='forge')
+    author = id
+    filter1 = {"_id":author,"name":arg1}
+    search = clientdictionary.find_one(filter=filter1)
+    print(search)
+    if search is not None:
+        for searchi in search:
+            _id = searchi._id
+            name = searchi.name
+            forgetestresult = forgetest(_id, author, name, arg1)
+            if forgetestresult == True:
+                return 1
+            else:
+                return 2
+    else:
+        return 3
+
+def findforgeid(arg1, id1):
+    client1 = pymongo.MongoClient(pymongotoken)
+    clientdiscord = client1.get_database(name='discord')
+    clientdictionary = clientdiscord.get_collection(name='forge')
+    author = id1
+    filter1 = {"_id":author,"name":arg1}
+    search = clientdictionary.find_one(filter=filter1)
+    if search is not None:
+        for searchi in search:
+            _id = searchi._id
+            return _id
+    else:
+        return False
+
+def findforgename(arg1, id1):
+    client1 = pymongo.MongoClient(pymongotoken)
+    clientdiscord = client1.get_database(name='discord')
+    clientdictionary = clientdiscord.get_collection(name='forge')
+    author = id1
+    filter1 = {"_id":author,"name":arg1}
+    search = clientdictionary.find_one(filter=filter1)
+    if search is not None:
+        for searchi in search:
+            name = searchi.name
+            return name
+    else:
+        return False
+    client1.close()
+
+def findforgelevel(arg1, id1):
+    client1 = pymongo.MongoClient(pymongotoken)
+    clientdiscord = client1.get_database(name='discord')
+    clientdictionary = clientdiscord.get_collection(name='forge')
+    author = id1
+    filter1 = {"_id":author,"name":arg1}
+    search = clientdictionary.find_one(filter=filter1)
+    if search is not None:
+        for searchi in search:
+            level = searchi.level
+            return level
+    else:
+        return False
+    client1.close()
+
+def forgecalculate(level1):
+        percent1 = 1 * int(level1)
+        random1 = random.randint(0, 1000)
+        if random1 <= 90 - percent1:
+            level1 = int(level1) + 1
+            return level1
+        elif random1 > 90 - percent1 and level1 == 1:
+            return level1
+        else:
+            level1 = int(level1) - 1
+            return level1
 
 Client.run(TOKEN)
