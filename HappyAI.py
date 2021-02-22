@@ -1,4 +1,3 @@
-
 import pymongo
 import discord
 from discord.ext.commands import has_permissions, MissingPermissions
@@ -13,17 +12,23 @@ import typing
 import os
 import youtube_dl
 import time
+import json
 
 intents = discord.Intents.default()
 intents.members = True
 Client = commands.Bot(command_prefix='$', intents=intents, help_command=None)
 
-f = open('token.txt', 'r')
-TOKEN = f.read()
-f.close()
-f = open('pymongotoken.txt', 'r')
-pymongotoken = f.read()
-f.close()
+with open('token.json', 'r') as f:
+    json_data = json.load(f)
+
+HappyAIdev = json_data['bot1']['dev']
+
+if HappyAIdev == 'True':
+    TOKEN = json_data['bot1']['token']
+    pymongotoken = json_data['bot1']['pymongotoken']
+elif HappyAIdev == 'False':
+    TOKEN = json_data['bot1']['tokennotdev']
+    pymongotoken = json_data['bot1']['pymongotoken']
 
 status = discord.Game('$도움말 또는 $help로 도움말을 보세요.')
 
